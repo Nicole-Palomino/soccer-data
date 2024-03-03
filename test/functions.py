@@ -24,9 +24,9 @@ class functions_horizontal:
         ax.imshow(image)  
 
     def get_information_horizontal(ax, equipos, cuerpo, color_home, color_away, home_name, away_name, score_home, score_away, stadium_city, leagueName, leagueRoundName, day, stadium_name, referee):
-        ax.text(.2, .8, f'{home_name}', ha='center', va='center', fontproperties=equipos.prop, size=21, color='white', bbox=dict(facecolor=f'{color_home}', boxstyle='round'))
+        ax.text(.2, .8, f'{home_name}', ha='center', va='center', fontproperties=equipos.prop, size=19, color='white', bbox=dict(facecolor=f'{color_home}', boxstyle='round'))
         ax.text(.5, .8, f'{score_home} - {score_away}', ha='center', va='center', fontproperties=equipos.prop, size=23)
-        ax.text(.8, .8, f'{away_name}', ha='center', va='center', fontproperties=equipos.prop, size=21, color='white', bbox=dict(facecolor=f'{color_away}', boxstyle='round'))
+        ax.text(.8, .8, f'{away_name}', ha='center', va='center', fontproperties=equipos.prop, size=19, color='white', bbox=dict(facecolor=f'{color_away}', boxstyle='round'))
         ax.text(.5, .5, f'{stadium_city} {day}', ha='center', va='center', fontproperties=cuerpo.prop, size=15)
         ax.text(.5, .3, f'{leagueName} {leagueRoundName}', ha='center', va='center', fontproperties=cuerpo.prop, size=15)
         ax.text(.5, .1, f'{stadium_name}   Árbitro: {referee}', ha='center', va='center', fontproperties=cuerpo.prop, size=15)
