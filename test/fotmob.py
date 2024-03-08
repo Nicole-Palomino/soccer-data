@@ -39,8 +39,8 @@ class scraperFotmob:
             colors.append(color)
             fonts.append(font)
         return colors, fonts
-
-    def info_match(self, json_data):
+    
+    def get_info_match(self, json_data):
         league = json_data['props']['pageProps']['general']['leagueName']
         round_name = json_data['props']['pageProps']['general']['leagueRoundName']
         country = json_data['props']['pageProps']['general']['countryCode']
@@ -69,68 +69,10 @@ class scraperFotmob:
             away_info.append(list_away)
         return home_info, away_info
 
-    def get_info_player_match(self, json_data):
-        player_of_the_match = json_data['props']['pageProps']['content']['matchFacts']['playerOfTheMatch']
-        id_player_match = player_of_the_match['id']
-        name_player_match = player_of_the_match['name']['fullName']
-        team_player_match = player_of_the_match['teamName']
-        rol_player_match = player_of_the_match['role']
-        player_home_away = player_of_the_match['isHomeTeam']
-        rating_player_match = player_of_the_match['rating']['num']
-        return id_player_match, name_player_match, team_player_match, rol_player_match, player_home_away, rating_player_match
-
     def get_image_player_match(self, id):
         url_image = f'https://images.fotmob.com/image_resources/playerimages/{id}.png'
         image_player_match = Image.open(urlopen(url_image))
         return image_player_match
-    
-    def get_top_stats_player_match(self, json_data):
-        player_of_the_match = json_data['props']['pageProps']['content']['matchFacts']['playerOfTheMatch']
-        stats_player_match = player_of_the_match['stats']
-
-        list_top_stats = ['FotMob rating', 'Minutes played', 'Goals', 'Assists', 'Total shots', 'Accurate passes', 'Chances created', 'Expected goals (xG)']
-        top_stats_player_match = stats_player_match[0]['stats']
-        list_stats_player_match = []
-
-        for x in list_top_stats:
-            list_stats_player_match.append(top_stats_player_match[x]['value'])
-        return list_stats_player_match
-
-    def get_attack_stats_player_match(self, json_data):
-        player_of_the_match = json_data['props']['pageProps']['content']['matchFacts']['playerOfTheMatch']
-        stats_player_match = player_of_the_match['stats']
-
-        list_attack_stats = ['Touches', 'Touches in opposition box', 'Passes into final third']
-        attack_player_match = stats_player_match[1]['stats']
-        list_attack_player_match = []
-
-        for x in list_attack_stats:
-            list_attack_player_match.append(attack_player_match[x]['value'])
-        return list_attack_player_match
-
-    def get_defense_player_match(self, json_data):
-        player_of_the_match = json_data['props']['pageProps']['content']['matchFacts']['playerOfTheMatch']
-        stats_player_match = player_of_the_match['stats']
-        
-        list_defense_stats = ['Tackles won', 'Defensive actions', 'Recoveries']
-        defense_player_match = stats_player_match[2]['stats']
-        list_defense_player_match = []
-
-        for x in list_defense_stats:
-            list_defense_player_match.append(defense_player_match[x]['value'])
-        return list_defense_player_match
-
-    def get_duel_player_match(self, json_data):
-        player_of_the_match = json_data['props']['pageProps']['content']['matchFacts']['playerOfTheMatch']
-        stats_player_match = player_of_the_match['stats']
-
-        list_duel_stats = ['Duels won', 'Aerial duels won', 'Was fouled', 'Fouls committed']
-        duels_player_match = stats_player_match[3]['stats']
-        list_duel_player_match = []
-
-        for x in list_duel_stats:
-            list_duel_player_match.append(duels_player_match[x]['value'])
-        return list_duel_player_match
 
     def get_minute_goals(self, json_data):
         events = json_data['props']['pageProps']['content']['matchFacts']['events']['events']
@@ -168,62 +110,6 @@ class scraperFotmob:
         yellow_card, red_card = all_stats[6]['stats'][1], all_stats[6]['stats'][2]
         return ball_possession, xg_match, shot_match, target_match, big_chances_match, big_chances_missed_match, passes_match, fouls_match, corner_match, shots_blocked, shots_poste, shots_inside, shots_outside, long_ball, touches_in_box, offsides, tackles, bloqueos, saves, duelos, aereos, dribbles, yellow_card, red_card
 
-    def get_players_home(self, json_data):
-        ids, posicion, name, camiseta, imagen, rating, isHome, stats, minutes = [], [], [], [], [], [], [], [], []
-        data_local = json_data['props']['pageProps']['content']['lineup']['lineup'][0]['players']
-
-        for equipo in data_local:
-            for jugador in equipo:
-                ids.append(jugador['id'])
-                posicion.append(jugador['positionStringShort'])
-                name.append(jugador['name']['fullName'])
-                camiseta.append(jugador['shirt'])
-                imagen.append(jugador['imageUrl'])
-                rating.append(jugador['rating']['num'])
-                isHome.append(jugador['isHomeTeam'])
-                stats.append(jugador['stats'])
-                minutes.append(jugador['minutesPlayed'] if jugador['minutesPlayed'] else 0)
-                
-            df_jug_destacado_local = pd.DataFrame({
-                'id': ids, 
-                'posicion': posicion,
-                'nombre': name,
-                'camiseta': camiseta,
-                'imagen': imagen,
-                'rating': rating,
-                'isHome': isHome,
-                'stats': stats,
-                'minutes': minutes
-            })
-        return df_jug_destacado_local
-
-    def get_players_visit(self, json_data):
-        posicion_visit, name_visit, camiseta_visit, imagen_visit, rating_visit, isHome_visit, stats_visit, minutes_visit = [], [], [], [], [], [], [], []
-        data_visit = json_data['props']['pageProps']['content']['lineup']['lineup'][1]['players']
-
-        for equipo in data_visit:
-            for jugador in equipo:
-                posicion_visit.append(jugador['positionStringShort'])
-                name_visit.append(jugador['name']['fullName'])
-                camiseta_visit.append(jugador['shirt'])
-                imagen_visit.append(jugador['imageUrl'])
-                rating_visit.append(jugador['rating']['num'])
-                isHome_visit.append(jugador['isHomeTeam'])
-                stats_visit.append(jugador['stats'])
-                minutes_visit.append(jugador['minutesPlayed'])
-                
-        df_jug_destacado_visit = pd.DataFrame({
-            'posicion': posicion_visit,
-            'nombre': name_visit,
-            'camiseta': camiseta_visit,
-            'imagen': imagen_visit,
-            'rating': rating_visit,
-            'isHome': isHome_visit,
-            'stats': stats_visit,
-            'minutes': minutes_visit
-        })
-        return df_jug_destacado_visit
-
     def get_data_players_destacados(self, players_home, players_away):
         # jugadores destacados
         player_destacado_home = players_home[['nombre', 'imagen', 'rating', 'camiseta']].sort_values(by='rating', ascending=False).iloc[0]
@@ -245,12 +131,13 @@ class scraperFotmob:
         list_estadistica3 = ['Touches', 'Successful dribbles', 'Accurate long balls', 'Passes into final third']
 
         extracted_home = {}
-        player_destado_home = df_player_home['stats'].reset_index(drop=True)
+        player_destacado_home = df_player_home['stats'].reset_index(drop=True)
 
         listas_estadisticas = [list_estadistica1, list_estadistica2, list_estadistica3]
-        player_stats_home = [player_destado_home[0][0]['stats'], player_destado_home[0][3]['stats'], player_destado_home[0][1]['stats']]
+        player_stats_home = [player_destacado_home[0][0]['stats'], player_destacado_home[0][3]['stats'], player_destacado_home[0][1]['stats']]
 
-        recuperaciones_player_home = player_destado_home[0][2]['stats'].get('Recoveries', {}).get('value', 0)
+        stats_jugador_home = player_destacado_home[0][2]['stats']
+        recuperaciones_player_home = stats_jugador_home.get('Recoveries', {'stat': {'value': 0}}).get('stat', {}).get('value', 0)
 
         for stats, jugador in zip(listas_estadisticas, player_stats_home):
             for stat in stats:
@@ -268,11 +155,12 @@ class scraperFotmob:
         listas_estadisticas = [list_estadistica1, list_estadistica2, list_estadistica3]
         player_stats_away = [player_destado_away[0][0]['stats'], player_destado_away[0][3]['stats'], player_destado_away[0][1]['stats']]
 
-        recuperaciones_player_away = player_destado_away[0][2]['stats'].get('Recoveries', {}).get('value', 0)
+        stats_jugador_away = player_destado_away[0][2]['stats']
+        recuperaciones_player_away = stats_jugador_away.get('Recoveries', {'stat': {'value': 0}}).get('stat', {}).get('value', 0)
 
         for stats, jugador in zip(listas_estadisticas, player_stats_away):
             for stat in stats:
-                extracted_away[stat] = jugador.get(stat, {}).get('value', 0)
+                extracted_away[stat] = jugador.get(stat, {}).get('stat', 0).get('value', 0)
         return extracted_away, recuperaciones_player_away
 
     def get_data_player_arquero(self, df_player_arquero):

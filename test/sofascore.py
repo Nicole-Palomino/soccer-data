@@ -1,6 +1,9 @@
 import json
 import requests
 import pandas as pd
+from PIL import Image
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
 
 class scraperSofaScore:
     def __init__(self, match_id_sofascore):
@@ -38,30 +41,98 @@ class scraperSofaScore:
             datos_json = json.load(archivo)   
         return datos_json 
     
+    def get_headers(self, url):
+        r = requests.get(url, headers=self.headers)
+        html = r.text
+        soup = BeautifulSoup(html, 'html.parser')
+        json_fotmob = json.loads(soup.find('script', attrs={'id':'__NEXT_DATA__'}).contents[0])
+        return json_fotmob
+    
+    def get_colors_teams(self, json_fotmob):
+        team_colors = json_fotmob['props']['pageProps']['initialProps']['event']
+        teams = ['homeTeam', 'awayTeam']
+        colors = []
+        fonts = []
+        for x in teams:
+            color = team_colors[x]['teamColors']['primary']
+            font = team_colors[x]['teamColors']['text']
+            colors.append(color)
+            fonts.append(font)
+        return colors, fonts
+
+    def get_players_match_stats(self, match_id, home_name, away_name):
+        response = requests.get(
+            f'https://api.sofascore.com/api/v1/event/{match_id}/lineups', 
+            headers=self.headers
+        )
+        
+        names = {'home': home_name, 'away': away_name}
+        dataframes = {}
+        for team in names.keys():
+            data = pd.DataFrame(response.json()[team]['players'])
+            columns_list = [
+                data['player'].apply(pd.Series), data['shirtNumber'], 
+                data['jerseyNumber'], data['substitute'], 
+                data['statistics'].apply(pd.Series, dtype=object), 
+                data['captain']
+            ]
+            df = pd.concat(columns_list, axis=1)
+            df['team'] = names[team]
+            dataframes[team] = df
+        
+        return dataframes['home'], dataframes['away']
+    
+    def get_stats_featured_players(self, match_home, match_away):
+        player_destacado_home = match_home[['name', 'id', 'rating', 'shirtNumber']].sort_values(by='rating', ascending=False).iloc[0]
+        player_destacado_away = match_away[['name', 'id', 'rating', 'shirtNumber']].sort_values(by='rating', ascending=False).iloc[0]
+        
+        return player_destacado_home, player_destacado_away
+    
+    def get_image_players(self, player_home_id, player_away_id):
+        url_image_home = f'https://api.sofascore.app/api/v1/player/{player_home_id}/image'
+        url_image_away = f'https://api.sofascore.app/api/v1/player/{player_away_id}/image'
+
+        image_player_home = Image.open(urlopen(url_image_home))
+        image_player_away = Image.open(urlopen(url_image_away))
+
+        return image_player_home, image_player_away
+
+    def get_info_featured_player_away(self, match_away):
+        player_featured_away = match_away[['name', 'minutesPlayed', 'goals', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'bigChanceCreated', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
+        
+        player_destacado_away = player_featured_away.sort_values(by='rating', ascending=False).iloc[0]
+
+        return player_destacado_away
+    
+    def get_info_featured_player_home(self, match_home):
+        player_featured_home = match_home[['name', 'minutesPlayed', 'goals', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'bigChanceCreated', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
+        player_destacado_home = player_featured_home.sort_values(by='rating', ascending=False).iloc[0]
+
+        return player_destacado_home
+    
+    def get_info_featured_arquero(self, match_home):
+        player_featured_port = match_home[['name', 'minutesPlayed', 'saves', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'penaltyConceded', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
+
+        player_destacado_port = player_featured_port.sort_values(by='rating', ascending=False).iloc[0]
+
+        return player_destacado_port
+    
     def get_player_id(self, jersey, data):
         for player in data:
             if player['player']['jerseyNumber'] == jersey.astype(str):
                 return player['player']['id']
         return None
     
-    def get_ids_heatmap(self, json_data_sofascore, player_destacado_home, player_destacado_away, info_player_match):
+    def get_ids_heatmap(self, json_data_sofascore, player_destacado_home, player_destacado_away):
         data_home = json_data_sofascore['home']['players']
         data_away = json_data_sofascore['away']['players']
-        # data_match = data_home + data_away
 
         player_jersey_local = player_destacado_home[3]
         player_jersey_visit = player_destacado_away[3]
-        player_home_away = info_player_match[4]
 
         player_id_local = self.get_player_id(player_jersey_local, data_home)
         player_id_visit = self.get_player_id(player_jersey_visit, data_away)
-
-        if player_home_away == True:
-            player_id_match = self.get_player_id(player_jersey_local, data_home)
-        else:
-            player_id_match = self.get_player_id(player_jersey_visit, data_away)
-            
-        return player_id_local, player_id_visit, player_id_match
+        return player_id_local, player_id_visit
     
     def get_heatmap(self, match_id_sofascore, player_id):
         url = f'https://api.sofascore.com/api/v1/event/{match_id_sofascore}/player/{player_id}/heatmap'
@@ -72,11 +143,11 @@ class scraperSofaScore:
         else:
             return None
         
-    def get_heatmap_players(self, match_id_sofascore, player_id_home, player_id_away, player_id_match):
+    def get_heatmap_players(self, match_id_sofascore, player_id_home, player_id_away):
         heatmap_hpme = self.get_heatmap(match_id_sofascore, player_id_home)
         heatmap_away = self.get_heatmap(match_id_sofascore, player_id_away)
-        heatmap_match = self.get_heatmap(match_id_sofascore, player_id_match)
-        return heatmap_hpme, heatmap_away, heatmap_match
+        # heatmap_match = self.get_heatmap(match_id_sofascore, player_id_match)
+        return heatmap_hpme, heatmap_away
     
     def get_mapa_tiros(self, match_id):
         url = f'https://api.sofascore.com/api/v1/event/{match_id}/shotmap'

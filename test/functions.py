@@ -31,39 +31,39 @@ class functions_horizontal:
         ax.text(.5, .3, f'{leagueName} {leagueRoundName}', ha='center', va='center', fontproperties=cuerpo.prop, size=15)
         ax.text(.5, .1, f'{stadium_name}   Árbitro: {referee}', ha='center', va='center', fontproperties=cuerpo.prop, size=15)
     
-    def get_jugador_destacado_local(ax, jugador_destacado_local, extracted_local, recuperaciones_local, nombre, cuerpo):
-        ax.text(.22, .9, f'{jugador_destacado_local[0]}', ha='left', va='center', fontproperties=nombre.prop, size=23)
-        ax.text(.05, .8, f"Minutos jugados: {extracted_local['Minutes played']}'", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .74, f"Goles: {extracted_local['Goals']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .68, f"Asistencias: {extracted_local['Assists']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .62, f"Tiros: {extracted_local['Total shots']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .56, f"Pases: {extracted_local['Accurate passes']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .5, f"Chances creadas: {extracted_local['Chances created']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .44, f"Asistencias esperadas: {extracted_local['Expected assists (xA)']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .38, f"Recuperaciones: {recuperaciones_local}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .32, f"Toques: {extracted_local['Touches']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .26, f"Regates: {extracted_local['Successful dribbles']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .20, f"Rating: {extracted_local['FotMob rating']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .14, f"Balones largos: {extracted_local['Accurate long balls']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .08, f"Duelos ganados: {extracted_local['Ground duels won']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .02, f"Faltas cometidas: {extracted_local['Fouls committed']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+    def get_jugador_destacado_local(ax, info_player_home, nombre, cuerpo):
+        ax.text(.23, .9, f'{info_player_home[0]}', ha='left', va='center', fontproperties=nombre.prop, size=23)
+        ax.text(.05, .8, f"Minutos jugados: {int(info_player_home[1])}'", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .74, f"Goles: {int(info_player_home[2])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .68, f"Asistencias esperadas: {round(info_player_home[3], 2)}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .62, f"Pases: {int(info_player_home[4])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .56, f"Pases claves: {int(info_player_home[5])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .5, f"Balones largos: {int(info_player_home[6])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .44, f"Pérdidas de balón: {int(info_player_home[7])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .38, f"Toques: {int(info_player_home[8])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .32, f"Chances creadas: {int(info_player_home[9])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .26, f"Rating: {int(info_player_home[10])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .20, f"Entradas: {int(info_player_home[11])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .14, f"Duelos ganados: {int(info_player_home[12])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .08, f"Faltas cometidas: {int(info_player_home[13])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .02, f"Equipo: {info_player_home[14]}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
 
-    def get_jugador_destacado_visit(ax, jugador_destacado_visit, extracted_visit, recuperaciones_visit, nombre, cuerpo):
-        ax.text(.22, .9, f'{jugador_destacado_visit[0]}', ha='left', va='center', fontproperties=nombre.prop, size=23)
-        ax.text(.05, .8, f"Minutos jugados: {extracted_visit['Minutes played']}'", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .74, f"Goles: {extracted_visit['Goals']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .68, f"Asistencias: {extracted_visit['Assists']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .62, f"Tiros: {extracted_visit['Total shots']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .56, f"Pases: {extracted_visit['Accurate passes']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .5, f"Chances creadas: {extracted_visit['Chances created']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .44, f"Asistencias esperadas: {extracted_visit['Expected assists (xA)']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .38, f"Recuperaciones: {recuperaciones_visit}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .32, f"Toques: {extracted_visit['Touches']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .26, f"Regates: {extracted_visit['Successful dribbles']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .20, f"Rating: {extracted_visit['FotMob rating']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .14, f"Balones largos: {extracted_visit['Accurate long balls']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .08, f"Duelos ganados: {extracted_visit['Ground duels won']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .02, f"Faltas cometidas: {extracted_visit['Fouls committed']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+    def get_jugador_destacado_visit(ax, info_player_away, nombre, cuerpo):
+        ax.text(.23, .9, f'{info_player_away[0]}', ha='left', va='center', fontproperties=nombre.prop, size=23)
+        ax.text(.05, .8, f"Minutos jugados: {int(info_player_away[1])}'", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .74, f"Goles: {int(info_player_away[2])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .68, f"Asistencias esperadas: {round(info_player_away[3], 2)}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .62, f"Pases: {int(info_player_away[4])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .56, f"Pases claves: {int(info_player_away[5])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .5, f"Balones largos: {int(info_player_away[6])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .44, f"Pérdidas de balón: {int(info_player_away[7])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .38, f"Toques: {int(info_player_away[8])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .32, f"Chances creadas: {int(info_player_away[9])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .26, f"Rating: {int(info_player_away[10])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .20, f"Entradas: {int(info_player_away[11])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .14, f"Duelos ganados: {int(info_player_away[12])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .08, f"Faltas cometidas: {int(info_player_away[13])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .02, f"Equipo: {info_player_away[14]}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
 
     def get_jugador_destacado_arquero(ax, jugador_destacado_local, extracted_local, nombre, cuerpo):
         ax.text(.21, .92, f'{jugador_destacado_local[0]}', ha='left', va='center', fontproperties=nombre.prop, size=23)
@@ -83,11 +83,11 @@ class functions_horizontal:
         ax.text(.05, .02, f"Despejes de balón: {extracted_local['Punches']}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
 
     def get_estadisticas_match(ax, cuerpo, widths_possession, posesion, colores, xgs_match, shots_match, corners_match, offsides_match, yellow_cards, red_cards, homeColor, awayColor, total_value):
-        ax.text(50., .5, f'Posesión', ha='center', va='center', fontproperties=cuerpo.prop, size=17, color="white")
+        ax.text(50., .5, f'Posesión', ha='center', va='center', fontproperties=cuerpo.prop, size=17, color='white')
         ax.barh(0.5, widths_possession[0], height=0.2, left=0, color=colores[0])
         ax.barh(0.5, widths_possession[1], height=0.2, left=widths_possession[0], color=colores[1])
-        ax.text(12., .5, f'{posesion[0]}%', ha="left", va="center", fontproperties=cuerpo.prop, fontsize=18, color="white", zorder=2)
-        ax.text(92., .5, f'{posesion[1]}%', ha="right", va="center", fontproperties=cuerpo.prop, fontsize=18, color="white", zorder=2)
+        ax.text(12., .5, f'{posesion[0]}%', ha="left", va="center", fontproperties=cuerpo.prop, color='white', fontsize=18, zorder=2)
+        ax.text(92., .5, f'{posesion[1]}%', ha="right", va="center", fontproperties=cuerpo.prop, color='white', fontsize=18, zorder=2)
 
         if xgs_match[0] > xgs_match[1]:
             ax.text(12., .3, f'{xgs_match[0]}', ha='left', va='center', fontproperties=cuerpo.prop, size=17, color='white', bbox=dict(facecolor=f'{homeColor}', boxstyle='round'))
@@ -269,11 +269,11 @@ class functions_horizontal:
         ax.text(.0, .05, f'Faltas cometidas: {cometidas_player_match}', ha='left', va='center', fontproperties=cuerpo.prop, size=12)
 
     def get_estadisticas_match_vertical(ax, widths_possession, posesion, xgs_match, shots_match, targets_match, corners_match, pass_match, offsides_match, foul_match, ball_long, won_duel, dribble_match, yellow_cards, red_cards, total_value, cuerpo, colores, homeColor, awayColor):
-        ax.text(50., .6, f'Posesión', ha='center', va='center', fontproperties=cuerpo.prop, size=13, color="white")
+        ax.text(50., .6, f'Posesión', ha='center', va='center', fontproperties=cuerpo.prop, size=13, color='white')
         ax.barh(0.6, widths_possession[0], height=0.1, left=0, color=colores[0])
         ax.barh(0.6, widths_possession[1], height=0.1, left=widths_possession[0], color=colores[1])
-        ax.text(10., .6, f'{posesion[0]}%', ha="left", va="center", fontproperties=cuerpo.prop, fontsize=16, color="white", zorder=2)
-        ax.text(90., .6, f'{posesion[1]}%', ha="right", va="center", fontproperties=cuerpo.prop, fontsize=16, color="white", zorder=2)
+        ax.text(10., .6, f'{posesion[0]}%', ha="left", va="center", fontproperties=cuerpo.prop, color='white', fontsize=16, zorder=2)
+        ax.text(90., .6, f'{posesion[1]}%', ha="right", va="center", fontproperties=cuerpo.prop, color='white', fontsize=16, zorder=2)
 
         # xg
         if xgs_match[0] > xgs_match[1]:
@@ -444,48 +444,3 @@ class functions_horizontal:
             ax.text(90., -.6, f'{red_cards[1]}', ha='right', va='center', fontproperties=cuerpo.prop, size=14, color='white', bbox=dict(facecolor=f'{awayColor}', boxstyle='round'))
         ax.set_ylim(-0.7, 0.7)
         ax.set_xlim(0, total_value)
-
-    def get_escudo_player(home, teamName, image_local, image_visit):
-        if home == teamName:
-            image = image_local
-        else:
-            image = image_visit
-        return image   
-
-    def get_info_player_match(ax, player_match, information_jug_match, nombre, equipos, cuerpo):
-        ax.text(.5, .9, f'Jugador del partido', ha='center', va='center', fontproperties=equipos.prop, size=18)
-        ax.text(.5, .2, f'{player_match}', ha='center', va='center', fontproperties=nombre.prop, size=18)
-        ax.text(.65, .2, f'{information_jug_match["rating"]["num"]}', ha='center', va='center', fontproperties=cuerpo.prop, size=16, bbox=dict(facecolor='lightblue', boxstyle='round'))
-        ax.text(.5, .1, f'{information_jug_match["role"]}', ha='center', va='center', fontproperties=cuerpo.prop, size=13)
-    
-    # def get_import_match(ax):
-    #     ax.text(.198, .5, f'{stats_general["Minutes played"]["value"]}', ha='center', va='center', fontproperties=equipos.prop, size=18)
-    #     ax.text(.5, .5, f'{stats_general["Goals"]["value"]}', ha='center', va='center', fontproperties=equipos.prop, size=18)
-    #     ax.text(.81, .5, f'{stats_general["Assists"]["value"]}', ha='center', va='center', fontproperties=equipos.prop, size=16)
-    #     ax.text(.198, .3, f'Minutos', ha='center', va='center', fontproperties=equipos.prop, size=18)
-    #     ax.text(.5, .3, f'Goles', ha='center', va='center', fontproperties=equipos.prop, size=18)
-    #     ax.text(.81, .3, f'Asistencias', ha='center', va='center', fontproperties=equipos.prop, size=16)
-
-    # def get_data_attack(ax):
-    #     ax.text(.1, .9, f'Tiros largos: {stats_attack["Accurate long balls"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.1, .8, f'Regates: {stats_attack["Successful dribbles"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.1, .7, f'Toques: {stats_attack["Touches"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.1, .6, f'Pases en el último tercio: {stats_attack["Passes into final third"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.1, .5, f'Tiros libres precisos: {stats_attack["Accurate crosses"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.1, .4, f'Pérdidas de balón: {stats_attack["Dispossessed"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-
-    # def get_data_defense(ax):
-    #     ax.text(.0, .9, f'Entradas: {stats_defensive["Tackles won"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .8, f'Intercepciones: {stats_defensive["Interceptions"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .7, f'Bloqueos: {stats_defensive["Blocks"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     # ax.text(.0, .6, f'Despejes de cabeza: {stats_defensive["Headed clearance"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .6, f'Acciones defensivas: {stats_defensive["Defensive actions"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .5, f'Recuperaciones: {stats_defensive["Recoveries"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-
-    # def get_data_duel(ax):
-    #     ax.text(.0, .9, f'Duelos ganados: {stats_duels["Duels won"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .8, f'Duelos perdidos: {stats_duels["Duels lost"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .7, f'Duelos terrestres: {stats_duels["Ground duels won"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .6, f'Duelos aéreos: {stats_duels["Aerial duels won"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .5, f'Faltas recibidas: {stats_duels["Was fouled"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
-    #     ax.text(.0, .4, f'Faltas cometidas: {stats_duels["Fouls committed"]["value"]}', ha='left', va='center', fontproperties=equipos.prop, size=11)
