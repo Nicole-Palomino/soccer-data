@@ -98,20 +98,22 @@ class scraperSofaScore:
         return image_player_home, image_player_away
 
     def get_info_featured_player_away(self, match_away):
-        player_featured_away = match_away[['name', 'minutesPlayed', 'goals', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'bigChanceCreated', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
+        player_featured_away = match_away[['name', 'minutesPlayed', 'goals', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'aerialWon', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
         
         player_destacado_away = player_featured_away.sort_values(by='rating', ascending=False).iloc[0]
 
         return player_destacado_away
     
     def get_info_featured_player_home(self, match_home):
-        player_featured_home = match_home[['name', 'minutesPlayed', 'goals', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'bigChanceCreated', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
+        player_featured_home = match_home[['name', 'minutesPlayed', 'goals', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'aerialWon', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
         player_destacado_home = player_featured_home.sort_values(by='rating', ascending=False).iloc[0]
 
         return player_destacado_home
     
     def get_info_featured_arquero(self, match_home):
-        player_featured_port = match_home[['name', 'minutesPlayed', 'saves', 'expectedAssists', 'accuratePass', 'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 'penaltyConceded', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
+        player_featured_port = match_home[['name', 'minutesPlayed', 'saves', 'expectedAssists', 'accuratePass', 
+                           'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 
+                           'punches', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
 
         player_destacado_port = player_featured_port.sort_values(by='rating', ascending=False).iloc[0]
 
