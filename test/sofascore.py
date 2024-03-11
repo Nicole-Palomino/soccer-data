@@ -113,7 +113,7 @@ class scraperSofaScore:
     def get_info_featured_arquero(self, match_home):
         player_featured_port = match_home[['name', 'minutesPlayed', 'saves', 'expectedAssists', 'accuratePass', 
                            'keyPass', 'accurateLongBalls', 'possessionLostCtrl', 'touches', 
-                           'punches', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
+                           'duelLost', 'rating', 'totalTackle', 'duelWon', 'fouls', 'team']]
 
         player_destacado_port = player_featured_port.sort_values(by='rating', ascending=False).iloc[0]
 

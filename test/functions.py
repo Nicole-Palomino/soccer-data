@@ -75,7 +75,7 @@ class functions_horizontal:
         ax.text(.05, .5, f"Balones largos: {int(info_player_away[6])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
         ax.text(.05, .44, f"Pérdidas de balón: {int(info_player_away[7])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
         ax.text(.05, .38, f"Toques: {int(info_player_away[8])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
-        ax.text(.05, .32, f"Despejes: {int(info_player_away[9])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
+        ax.text(.05, .32, f"Duelos perdidos: {int(info_player_away[9])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
         ax.text(.05, .26, f"Rating: {round(info_player_away[10], 2)}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
         ax.text(.05, .20, f"Entradas: {int(info_player_away[11])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
         ax.text(.05, .14, f"Duelos ganados: {int(info_player_away[12])}", ha='left', va='center', fontproperties=cuerpo.prop, size=16)
